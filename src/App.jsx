@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import styled from "styled-components";
+import GlobalStyle from "./styles/Global Styles/GlobalStyles.js";
 
-function App() {
-  const [count, setCount] = useState(0)
+const H1 = styled.h1`
+background-color: #4b5563;
+  padding: 10px 20px;
+  font-size: 1.2rem;
+  color: white;
+  user-select: none;
+  display: inline-block;
+`
+const Button = styled.button`
+    color: white;
+  background-color: #1f2937;
+  user-select: none;
+  padding: 10px 20px;
+  display: inline;
+  cursor: pointer;
+`
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+const StyledApp = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  background-color: #0381d4;
+  width: 100%;
+`
+
+const Input = styled.input`
+    color: gray;
+  padding: 10px 20px;
+  border-radius: 10px;
+  outline: none;
+  border: 2px solid gray;
+  font-size: 1.1rem;
+`
+const App = () => {
+    return (
+        <>
+        <GlobalStyle/>
+
+        <StyledApp>
+            <H1>Hello World</H1>
+            <Button>Click me</Button>
+            <Input placeholder="enter name ..."></Input>
+        </StyledApp>
+            </>
+    )
 }
-
-export default App
+export default App;
