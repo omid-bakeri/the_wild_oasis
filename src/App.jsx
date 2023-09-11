@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import GlobalStyle from "./styles/Global Styles/GlobalStyles.js";
+import GlobalStyles from "./styles/Global Styles/GlobalStyles.js";
 
 const H1 = styled.h1`
 background-color: #4b5563;
@@ -11,11 +11,16 @@ background-color: #4b5563;
 `
 const Button = styled.button`
     color: white;
-  background-color: #1f2937;
+  background-color: var(--color-brand-800);
   user-select: none;
   padding: 10px 20px;
   display: inline;
   cursor: pointer;
+  &:hover {
+    background-color: red;
+    transition: 0.4s ease-in-out;
+    transform: translateY(10px);
+  }
 `
 
 const StyledApp = styled.div`
@@ -34,18 +39,19 @@ const Input = styled.input`
   outline: none;
   border: 2px solid gray;
   font-size: 1.1rem;
+  
 `
 const App = () => {
     return (
         <>
-        <GlobalStyle/>
+        <GlobalStyles/>
 
         <StyledApp>
             <H1>Hello World</H1>
             <Button>Click me</Button>
             <Input placeholder="enter name ..."></Input>
         </StyledApp>
-            </>
+        </>
     )
 }
 export default App;
