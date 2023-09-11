@@ -1,56 +1,36 @@
-import styled from "styled-components";
 import GlobalStyles from "./styles/Global Styles/GlobalStyles.js";
+import {BrowserRouter, Navigate, Route, Routes} from "react-router-dom";
+import Account from "./pages/Account.jsx";
+import Bookings from "./pages/Bookings.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Cabins from "./pages/Cabins.jsx";
+import Login from "./pages/Login.jsx";
+import Settings from "./pages/Settings.jsx";
+import PageNotFound from "./pages/PageNotFound.jsx";
+import Users from "./pages/Users.jsx";
+import AppLayout from "./ui/AppLayout.jsx";
 
-const H1 = styled.h1`
-background-color: #4b5563;
-  padding: 10px 20px;
-  font-size: 1.2rem;
-  color: white;
-  user-select: none;
-  display: inline-block;
-`
-const Button = styled.button`
-    color: white;
-  background-color: var(--color-brand-800);
-  user-select: none;
-  padding: 10px 20px;
-  display: inline;
-  cursor: pointer;
-  &:hover {
-    background-color: red;
-    transition: 0.4s ease-in-out;
-    transform: translateY(10px);
-  }
-`
-
-const StyledApp = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  background-color: #0381d4;
-  width: 100%;
-`
-
-const Input = styled.input`
-    color: gray;
-  padding: 10px 20px;
-  border-radius: 10px;
-  outline: none;
-  border: 2px solid gray;
-  font-size: 1.1rem;
-  
-`
 const App = () => {
     return (
         <>
-        <GlobalStyles/>
+            <GlobalStyles/>
+            <BrowserRouter>
+                <Routes>
+                    <Route element={<AppLayout/>}>
+                        <Route index element={<Navigate replace to='dashboard'/>}/>
+                        <Route path="account" element={<Account/>}/>
+                        <Route path="bookings" element={<Bookings/>}/>
+                        <Route path="dashboard" element={<Dashboard/>}/>
+                        <Route path="cabins" element={<Cabins/>}/>
+                        <Route path="users" element={<Users/>}/>
+                        <Route path="settings" element={<Settings/>}/>
+                    </Route>
 
-        <StyledApp>
-            <H1>Hello World</H1>
-            <Button>Click me</Button>
-            <Input placeholder="enter name ..."></Input>
-        </StyledApp>
+                    <Route path="login" element={<Login/>}/>
+                    <Route path="*" element={<PageNotFound/>}/>
+
+                </Routes>
+            </BrowserRouter>
         </>
     )
 }
