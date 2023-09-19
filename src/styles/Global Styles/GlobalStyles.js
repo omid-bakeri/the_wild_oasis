@@ -1,4 +1,4 @@
-import {createGlobalStyle} from "styled-components";
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
@@ -185,6 +185,6 @@ const GlobalStyles = createGlobalStyle`
   --image-grayscale: 10%;
   --image-opacity: 90%;
   */
-`
+`;
 
 export default GlobalStyles;
