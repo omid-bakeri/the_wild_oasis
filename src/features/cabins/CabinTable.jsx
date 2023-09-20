@@ -1,4 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { getCabins } from "../../services/apiCabins";
+import { useState } from "react";
+// import { useState } from "react";
 
 // eslint-disable-next-line no-unused-vars
 const Table = styled.div`
@@ -27,6 +31,19 @@ const TableHeader = styled.header`
 `;
 
 function CabinTable() {
+  // eslint-disable-next-line no-unused-vars
+  const [status, setStatus] = useState();
+
+  // const [store , setStore] = useState();
+
+  const x = useQuery({
+    queryKey: ["cabin"],
+    queryFn: getCabins,
+  });
+
+  console.log(x);
+
+  // time to use react query
   return <div>CabinTable</div>;
 }
 
