@@ -2,6 +2,10 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
+import { deleteCabins } from "../../services/apiCabins";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2rem;
@@ -47,7 +51,22 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { name, maxCapacity, regularPrice, discount, image } = cabin;
+  const queryClient = useQueryClient();
+
+  const { isLoading: isDeleteing, mutate } = useMutation({
+    mutationFn: (id) => deleteCabins(id),
+    onSuccess: () => {
+      toast.success("cabin successfully deleted!");
+
+      queryClient.invalidateQueries({
+        queryKey: ["cabin"],
+      });
+    },
+
+    onError: (err) => toast.error(err.message),
+  });
+
+  const { name, maxCapacity, regularPrice, discount, image, id } = cabin;
   return (
     <>
       <div
@@ -57,17 +76,19 @@ function CabinRow({ cabin }) {
        text-gray-600 justify-items-start 
        items-center"
       >
-        <Img src={image} />
+        <Img className="select-none" src={image} />
         <Cabin>{name}</Cabin>
-        <div>Fits up {maxCapacity} guests</div>
+        <div className="text-2xl">Fits up {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
         <Discount>{formatCurrency(discount)}</Discount>
         <button
+          onClick={() => mutate(id)}
+          disabled={isDeleteing}
           className="text-red-500 text-2xl border-2
           rounded-xl
-        border-red-500 px-4 py-2 bg-slate-100"
+        border-red-500 px-4 py-2 select-none bg-slate-100"
         >
-          Delete
+          {isDeleteing ? "deleting" : "Delete"}
         </button>
       </div>
     </>
