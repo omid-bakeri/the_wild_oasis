@@ -48,7 +48,6 @@ const App = () => {
 
       <Toaster
         position="top-center"
-        
         gutter={12}
         containerStyle={{ margin: "8px" }}
         toastOptions={{
@@ -59,11 +58,12 @@ const App = () => {
             duration: 5000,
           },
           style: {
-            fontSize: "1.6rem",
+            fontSize: "1.8rem",
+            userSelect: "none",
             maxWidth: "500px",
             border: "2px solid gray",
             padding: "16px 24px",
-            backgroundColor: "var(--color-gray-0)",
+            backgroundColor: "white",
             color: "var(--color-gray-700)",
           },
         }}

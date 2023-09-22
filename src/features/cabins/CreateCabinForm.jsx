@@ -10,6 +10,8 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 // import { useForm } from "react-hook-form";
 
+import FileInput from "../../ui/FileInput.jsx";
+
 const FormRow = styled.div`
   display: grid;
   align-items: center;
@@ -52,7 +54,7 @@ function CreateCabinForm({ setShowCreateCabin }) {
   }
   const queryClient = useQueryClient();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset, getValues } = useForm();
 
   const navigate = useNavigate();
 
@@ -64,13 +66,19 @@ function CreateCabinForm({ setShowCreateCabin }) {
         queryKey: ["cabin"],
       });
 
-      navigate("/");
+      setShowCreateCabin(false);
+
+      navigate("/Cabins");
     },
     onError: (err) => toast.err(err.message),
   });
 
   function onSubmit(data) {
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
+  }
+
+  function onError() {
+    toast.error("Please fill in all the fields that have *");
   }
   return (
     <>
@@ -79,11 +87,16 @@ function CreateCabinForm({ setShowCreateCabin }) {
       p-4 items-center absolute
      gap-3 top-0 bottom-0"
       >
-        <Form onSubmit={handleSubmit(onSubmit)} method="post">
+        <Form onSubmit={handleSubmit(onSubmit, onError)} method="post">
           <FormRow>
-            <Label htmlFor="name">Cabin name</Label>
+            <div className="flex justify-start items-center gap-2">
+              <Label htmlFor="name">Cabin name</Label>
+              <span className="text-3xl text-red-500">*</span>
+            </div>
             <input
-              {...register("name")}
+              {...register("name", {
+                required: "This field is required",
+              })}
               id="name"
               type="text"
               className="border-slate-400 border-2 
@@ -92,21 +105,47 @@ function CreateCabinForm({ setShowCreateCabin }) {
           </FormRow>
 
           <FormRow>
-            <Label htmlFor="maxCapacity">Maximum capacity</Label>
+            <div className="flex justify-start items-center gap-2">
+              <Label htmlFor="maxCapacity">Maximum capacity</Label>
+              <span className="text-3xl text-red-500">*</span>
+            </div>
+
             {/* <Input type="number" id="maxCapacity" /> */}
             <input
-              {...register("maxCapacity")}
+              defaultValue={0}
+              {...register("maxCapacity", {
+                required: "This field is required",
+
+                // validate: (value) => {
+                //   value < 1
+                //     ? toast.error("maxCapacity should bigger than 1")
+                //     : "";
+                // },
+                // min: {
+                //   value: 1,
+                //   message:
+                //     getValues().maxCapacity < 1
+                //       ? toast.error("maxCapacity should be bigger than 1")
+                //       : "",
+                // },
+              })}
               type="number"
               className="border-slate-400 border-2 
-        px-4 py-3 rounded-sm "
+              px-4 py-3 rounded-sm "
             />
           </FormRow>
 
           <FormRow>
-            <Label htmlFor="regularPrice">Regular price</Label>
+            <div className="flex justify-start items-center gap-2">
+              <Label htmlFor="regularPrice">Regular price</Label>
+              <span className="text-3xl text-red-500">*</span>
+            </div>
+
             {/* <Input type="number" id="regularPrice" /> */}
             <input
-              {...register("regularPrice")}
+              {...register("regularPrice", {
+                required: "This field is required",
+              })}
               type="text"
               className="border-slate-400 border-2 
         px-4 py-3 rounded-sm "
@@ -114,9 +153,18 @@ function CreateCabinForm({ setShowCreateCabin }) {
           </FormRow>
 
           <FormRow>
-            <Label htmlFor="discount">Discount</Label>
+            <div className="flex justify-start items-center gap-2">
+              <Label htmlFor="discount">Discount</Label>
+              <span className="text-3xl text-red-500">*</span>
+            </div>
+
             <input
-              {...register("discount")}
+              {...register("discount", {
+                required: "This field is required",
+                // validate: (value) =>
+                //   getValues().regularPrice >= value ? "" :
+                //   toast.error("regularPrice must bigger than discount"),
+              })}
               type="text"
               className="border-slate-400 border-2 
         px-4 py-3 rounded-sm "
@@ -136,11 +184,20 @@ function CreateCabinForm({ setShowCreateCabin }) {
 
           <FormRow>
             <Label htmlFor="image">Cabin photo</Label>
-            <input
+            {/* <input
               {...register("image")}
               type="file"
               className="border-slate-400 border-2 
         px-4 py-3 rounded-sm "
+            /> */}
+            <FileInput
+              name="image"
+              id="image"
+              accept="image/*"
+              type="file"
+              {...register("image", {
+                required: "this fiels is required",
+              })}
             />
           </FormRow>
 
@@ -160,7 +217,7 @@ function CreateCabinForm({ setShowCreateCabin }) {
               className="bg-[#4338ca]
            text-white px-8 py-3 text-[1.8rem] rounded-lg"
             >
-              Add new cabin
+              {isCreating ? "please wait" : "Add new cabin"}
             </button>
           </FormRow>
         </Form>
