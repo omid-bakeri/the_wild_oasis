@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 // import { useForm } from "react-hook-form";
 
 import FileInput from "../../ui/FileInput.jsx";
+import { useState } from "react";
 
 const FormRow = styled.div`
   display: grid;
@@ -73,19 +74,26 @@ function CreateCabinForm({ setShowCreateCabin }) {
     onError: (err) => toast.err(err.message),
   });
 
+  function handleMaxCapacityCheck(value) {
+    setCapacity(value);
+  }
+
   function onSubmit(data) {
+    console.log(capacity);
     mutate({ ...data, image: data.image[0] });
   }
 
   function onError() {
     toast.error("Please fill in all the fields that have *");
   }
+
+  const [capacity, setCapacity] = useState();
   return (
     <>
       <div
         className="flex justify-center 
-      p-4 items-center absolute
-     gap-3 top-0 bottom-0"
+      p-4 items-center absolute 
+     gap-3 top-0 bottom-0 h-screen backdrop:blur-2xl"
       >
         <Form onSubmit={handleSubmit(onSubmit, onError)} method="post">
           <FormRow>
@@ -112,6 +120,8 @@ function CreateCabinForm({ setShowCreateCabin }) {
 
             {/* <Input type="number" id="maxCapacity" /> */}
             <input
+              value={capacity}
+              onChange={(e) => handleMaxCapacityCheck(e.target.value)}
               defaultValue={0}
               {...register("maxCapacity", {
                 required: "This field is required",
@@ -183,7 +193,11 @@ function CreateCabinForm({ setShowCreateCabin }) {
           </FormRow>
 
           <FormRow>
-            <Label htmlFor="image">Cabin photo</Label>
+            <div className="flex justify-start items-center gap-2">
+              <Label htmlFor="image">Cabin photo</Label>
+              <span className="text-3xl text-red-500">*</span>
+            </div>
+
             {/* <input
               {...register("image")}
               type="file"

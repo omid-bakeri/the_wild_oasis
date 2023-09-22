@@ -5,7 +5,8 @@ import { formatCurrency } from "../../utils/helpers";
 import { deleteCabins } from "../../services/apiCabins";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
-
+import { FaTrash, FaEdit } from "react-icons/fa";
+import { DeleteCabin } from "./DeleteCabin";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2rem;
@@ -51,20 +52,7 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const queryClient = useQueryClient();
-
-  const { isLoading: isDeleteing, mutate } = useMutation({
-    mutationFn: (id) => deleteCabins(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["cabin"],
-      });
-
-      toast.success("cabin successfully deleted!");
-    },
-
-    onError: (err) => toast.error(err.message),
-  });
+  const { isDeleteing, deleteMutate } = DeleteCabin();
 
   const { name, maxCapacity, regularPrice, discount, image, id } = cabin;
   return (
@@ -80,16 +68,49 @@ function CabinRow({ cabin }) {
         <Cabin>{name}</Cabin>
         <div className="text-2xl">Fits up {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>
-        <Discount>{formatCurrency(discount)}</Discount>
-        <button
-          onClick={() => mutate(id)}
-          disabled={isDeleteing}
-          className="text-red-500 text-2xl border-2
+        {discount ? (
+          <Discount>{formatCurrency(discount)}</Discount>
+        ) : (
+          "--------"
+        )}
+        {isDeleteing ? (
+          <button
+            onClick={() => deleteMutate(id)}
+            disabled={isDeleteing}
+            className="text-red-500 text-2xl border-2
           rounded-xl
         border-red-500 px-4 py-2 select-none bg-slate-100"
-        >
-          {isDeleteing ? "deleting" : "Delete"}
-        </button>
+          >
+            DELETING
+          </button>
+        ) : (
+          <div className="flex gap-3">
+            <button
+              onClick={() => deleteMutate(id)}
+              disabled={isDeleteing}
+              className="text-red-500 text-2xl border-2
+        rounded-xl
+      border-red-500 px-4 py-2 select-none bg-slate-100"
+            >
+              <div className="flex justify-center items-center gap-2">
+                DELETE
+                <FaTrash />
+              </div>
+            </button>
+            <button
+              disabled={isDeleteing}
+              className="text-[#3730a3] text-2xl
+               border-2
+              rounded-xl
+            border-[#3730a3] px-4 py-2 select-none bg-slate-100"
+            >
+              <div className="flex justify-center items-center gap-2">
+                EDIT
+                <FaEdit />
+              </div>
+            </button>
+          </div>
+        )}
       </div>
     </>
   );

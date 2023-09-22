@@ -51,11 +51,11 @@ export async function createCabins(elementData) {
 
   // 3. delete the cabin if image not uploaded
 
-  if (storageError) {
-    await supabase.from("cabins").delete().eq("id", data.id);
+  // if (storageError) {
+  //   await supabase.from("cabins").delete().eq("id", data.id);
 
-    toast.error("error can not upload image !");
-  }
+  //   toast.error("error can not upload image !");
+  // }
 
   return data;
 }
