@@ -2,10 +2,11 @@
 /* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
-import { deleteCabins } from "../../services/apiCabins";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { toast } from "react-hot-toast";
 import { FaTrash, FaEdit } from "react-icons/fa";
+import { Tooltip } from "react-tooltip";
+
+import "react-tooltip/dist/react-tooltip.css";
+
 import { DeleteCabin } from "./DeleteCabin";
 const TableRow = styled.div`
   display: grid;
@@ -73,44 +74,65 @@ function CabinRow({ cabin }) {
         ) : (
           "--------"
         )}
-        {isDeleteing ? (
+        <div className="flex gap-3">
           <button
             onClick={() => deleteMutate(id)}
             disabled={isDeleteing}
-            className="text-red-500 text-2xl border-2
-          rounded-xl
-        border-red-500 px-4 py-2 select-none bg-slate-100"
-          >
-            DELETING
-          </button>
-        ) : (
-          <div className="flex gap-3">
-            <button
-              onClick={() => deleteMutate(id)}
-              disabled={isDeleteing}
-              className="text-red-500 text-2xl border-2
+            className="deleteAnchor text-red-500 text-2xl border-2
         rounded-xl
       border-red-500 px-4 py-2 select-none bg-slate-100"
-            >
-              <div className="flex justify-center items-center gap-2">
-                DELETE
-                <FaTrash />
-              </div>
-            </button>
-            <button
-              disabled={isDeleteing}
-              className="text-[#3730a3] text-2xl
+          >
+            <div className="flex justify-center items-center gap-2">
+              {/* DELETE */}
+              <FaTrash />
+            </div>
+          </button>
+
+          <Tooltip
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              ShadowRoot: "2xl",
+              fontWeight: "600",
+              fontSize: "1.5rem",
+              border: "4px solid black",
+            }}
+            className="text-sm"
+            anchorSelect=".deleteAnchor"
+            place="top"
+          >
+            Delete
+          </Tooltip>
+
+          <button
+            disabled={isDeleteing}
+            className="text-[#3730a3] text-2xl editAnchor
                border-2
               rounded-xl
             border-[#3730a3] px-4 py-2 select-none bg-slate-100"
-            >
-              <div className="flex justify-center items-center gap-2">
-                EDIT
-                <FaEdit />
-              </div>
-            </button>
-          </div>
-        )}
+          >
+            <div className="flex justify-center items-center gap-2">
+              {/* EDIT */}
+              <FaEdit />
+            </div>
+          </button>
+
+          <Tooltip
+            style={{
+              backgroundColor: "white",
+              color: "black",
+              ShadowRoot: "2xl",
+              fontWeight: "600",
+              fontSize: "1.5rem",
+              border: "4px solid black",
+            }}
+            className="text-sm"
+            anchorSelect=".editAnchor"
+            place="top"
+          >
+            Edit
+          </Tooltip>
+        </div>
       </div>
     </>
   );

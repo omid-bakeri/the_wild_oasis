@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 
 import FileInput from "../../ui/FileInput.jsx";
 import { useState } from "react";
+import CreateCabin from "./CreateCabin.js";
 
 const FormRow = styled.div`
   display: grid;
@@ -53,26 +54,10 @@ function CreateCabinForm({ setShowCreateCabin }) {
   function handleCancelCreateCabin() {
     setShowCreateCabin(false);
   }
-  const queryClient = useQueryClient();
 
   const { register, handleSubmit, reset, getValues } = useForm();
 
-  const navigate = useNavigate();
-
-  const { isLoading: isCreating, mutate } = useMutation({
-    mutationFn: createCabins,
-    onSuccess: () => {
-      toast.success("cabin successfully created");
-      queryClient.invalidateQueries({
-        queryKey: ["cabin"],
-      });
-
-      setShowCreateCabin(false);
-
-      navigate("/Cabins");
-    },
-    onError: (err) => toast.err(err.message),
-  });
+  const { isCreating, createMutate } = CreateCabin({ setShowCreateCabin });
 
   function handleMaxCapacityCheck(value) {
     setCapacity(value);
@@ -80,7 +65,7 @@ function CreateCabinForm({ setShowCreateCabin }) {
 
   function onSubmit(data) {
     console.log(capacity);
-    mutate({ ...data, image: data.image[0] });
+    createMutate({ ...data, image: data.image[0] });
   }
 
   function onError() {
