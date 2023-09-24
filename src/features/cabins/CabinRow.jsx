@@ -65,7 +65,7 @@ function CabinRow({ cabin }) {
        text-gray-600 justify-items-start 
        items-center"
       >
-        <Img className="select-none" src={image} />
+        <Img className="select-none z-1" src={image} />
         <Cabin>{name}</Cabin>
         <div className="text-2xl">Fits up {maxCapacity} guests</div>
         <Price>{formatCurrency(regularPrice)}</Price>

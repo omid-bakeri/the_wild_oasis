@@ -10,6 +10,16 @@ export async function getSettings() {
   return data;
 }
 
+export async function deleteSetting(id) {
+  const { data, error } = await supabase.from("settings").delete().eq("id", id);
+  if (error) {
+    console.error(error);
+    throw new Error("Settings could not be deleted");
+  }
+  return data;
+}
+
+
 // We expect a newSetting object that looks like {setting: newValue}
 export async function updateSetting(newSetting) {
   const { data, error } = await supabase

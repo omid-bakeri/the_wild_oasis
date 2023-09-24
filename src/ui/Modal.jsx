@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -5,25 +6,24 @@ const StyledModal = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--color-grey-0);
-  border-radius: var(--border-radius-lg);
-  box-shadow: var(--shadow-lg);
-  padding: 3.2rem 4rem;
-  transition: all 0.5s;
+  box-shadow: 1px 5px 20px 10px rgba(0, 0, 0, 0.1);
+  z-index: 299;
 `;
 
+// eslint-disable-next-line no-unused-vars
 const Overlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: var(--backdrop-color);
+  background-color: rgba(0 , 0 , 0 , .5);
   backdrop-filter: blur(4px);
   z-index: 1000;
   transition: all 0.5s;
 `;
 
+// eslint-disable-next-line no-unused-vars
 const Button = styled.button`
   background: none;
   border: none;
@@ -48,3 +48,15 @@ const Button = styled.button`
     color: var(--color-grey-500);
   }
 `;
+
+function Modal({ children }) {
+  return (
+    <>
+      <Overlay>
+      <StyledModal>{children}</StyledModal>
+      </Overlay>
+    </>
+  );
+}
+
+export default Modal;

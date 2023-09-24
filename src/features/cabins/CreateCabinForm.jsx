@@ -13,6 +13,9 @@ import { useNavigate } from "react-router-dom";
 import FileInput from "../../ui/FileInput.jsx";
 import { useState } from "react";
 import CreateCabin from "./CreateCabin.js";
+// import AddCabin from "./AddCabin.jsx";
+import Modal from "../../ui/Modal.jsx";
+import { Input } from "postcss";
 
 const FormRow = styled.div`
   display: grid;
@@ -50,21 +53,16 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ setShowCreateCabin }) {
-  function handleCancelCreateCabin() {
-    setShowCreateCabin(false);
-  }
-
+function CreateCabinForm({ isOpenModal, setIsOpenModal }) {
   const { register, handleSubmit, reset, getValues } = useForm();
 
-  const { isCreating, createMutate } = CreateCabin({ setShowCreateCabin });
+  const { isCreating, createMutate } = CreateCabin({ setIsOpenModal });
 
   function handleMaxCapacityCheck(value) {
     setCapacity(value);
   }
 
   function onSubmit(data) {
-    console.log(capacity);
     createMutate({ ...data, image: data.image[0] });
   }
 
@@ -75,152 +73,120 @@ function CreateCabinForm({ setShowCreateCabin }) {
   const [capacity, setCapacity] = useState();
   return (
     <>
-      <div
-        className="flex justify-center 
-      p-4 items-center absolute 
-     gap-3 top-0 bottom-0 h-screen backdrop:blur-2xl"
-      >
-        <Form onSubmit={handleSubmit(onSubmit, onError)} method="post">
-          <FormRow>
-            <div className="flex justify-start items-center gap-2">
-              <Label htmlFor="name">Cabin name</Label>
-              <span className="text-3xl text-red-500">*</span>
-            </div>
-            <input
-              {...register("name", {
-                required: "This field is required",
-              })}
-              id="name"
-              type="text"
-              className="border-slate-400 border-2 
+      <Form onSubmit={handleSubmit(onSubmit, onError)} method="post">
+        <FormRow>
+          <div className="flex justify-start items-center gap-2">
+            <Label htmlFor="name">Cabin name</Label>
+            <span className="text-3xl text-red-500">*</span>
+          </div>
+          <input
+            {...register("name", {
+              required: "This field is required",
+            })}
+            id="name"
+            type="text"
+            className="border-slate-400 border-2 
         px-4 py-3 rounded-sm "
-            />
-          </FormRow>
+          />
+        </FormRow>
 
-          <FormRow>
-            <div className="flex justify-start items-center gap-2">
-              <Label htmlFor="maxCapacity">Maximum capacity</Label>
-              <span className="text-3xl text-red-500">*</span>
-            </div>
+        <FormRow>
+          <div className="flex justify-start items-center gap-2">
+            <Label htmlFor="maxCapacity">Maximum capacity</Label>
+            <span className="text-3xl text-red-500">*</span>
+          </div>
 
-            {/* <Input type="number" id="maxCapacity" /> */}
-            <input
-              value={capacity}
-              onChange={(e) => handleMaxCapacityCheck(e.target.value)}
-              defaultValue={0}
-              {...register("maxCapacity", {
-                required: "This field is required",
-
-                // validate: (value) => {
-                //   value < 1
-                //     ? toast.error("maxCapacity should bigger than 1")
-                //     : "";
-                // },
-                // min: {
-                //   value: 1,
-                //   message:
-                //     getValues().maxCapacity < 1
-                //       ? toast.error("maxCapacity should be bigger than 1")
-                //       : "",
-                // },
-              })}
-              type="number"
-              className="border-slate-400 border-2 
+          <input
+            value={capacity}
+            onChange={(e) => handleMaxCapacityCheck(e.target.value)}
+            defaultValue={0}
+            {...register("maxCapacity", {
+              required: "This field is required",
+            })}
+            type="number"
+            className="border-slate-400 border-2 
               px-4 py-3 rounded-sm "
-            />
-          </FormRow>
+          />
+        </FormRow>
 
-          <FormRow>
-            <div className="flex justify-start items-center gap-2">
-              <Label htmlFor="regularPrice">Regular price</Label>
-              <span className="text-3xl text-red-500">*</span>
-            </div>
+        <FormRow>
+          <div className="flex justify-start items-center gap-2">
+            <Label htmlFor="regularPrice">Regular price</Label>
+            <span className="text-3xl text-red-500">*</span>
+          </div>
 
-            {/* <Input type="number" id="regularPrice" /> */}
-            <input
-              {...register("regularPrice", {
-                required: "This field is required",
-              })}
-              type="text"
-              className="border-slate-400 border-2 
+          <input
+            {...register("regularPrice", {
+              required: "This field is required",
+            })}
+            type="text"
+            className="border-slate-400 border-2 
         px-4 py-3 rounded-sm "
-            />
-          </FormRow>
+          />
+        </FormRow>
 
-          <FormRow>
-            <div className="flex justify-start items-center gap-2">
-              <Label htmlFor="discount">Discount</Label>
-              <span className="text-3xl text-red-500">*</span>
-            </div>
+        <FormRow>
+          <div className="flex justify-start items-center gap-2">
+            <Label htmlFor="discount">Discount</Label>
+            <span className="text-3xl text-red-500">*</span>
+          </div>
 
-            <input
-              {...register("discount", {
-                required: "This field is required",
-                // validate: (value) =>
-                //   getValues().regularPrice >= value ? "" :
-                //   toast.error("regularPrice must bigger than discount"),
-              })}
-              type="text"
-              className="border-slate-400 border-2 
+          <input
+            {...register("discount", {
+              required: "This field is required",
+            })}
+            type="text"
+            className="border-slate-400 border-2 
         px-4 py-3 rounded-sm "
-            />
-            {/* <Input type="number" id="discount" defaultValue={0} /> */}
-          </FormRow>
+          />
+        </FormRow>
 
-          <FormRow>
-            <Label htmlFor="description">Description for website</Label>
-            <Textarea
-              {...register("description")}
-              type="number"
-              id="description"
-              defaultValue=""
-            />
-          </FormRow>
+        <FormRow>
+          <Label htmlFor="description">Description for website</Label>
+          <Textarea
+            {...register("description")}
+            type="number"
+            id="description"
+            defaultValue=""
+          />
+        </FormRow>
 
-          <FormRow>
-            <div className="flex justify-start items-center gap-2">
-              <Label htmlFor="image">Cabin photo</Label>
-              <span className="text-3xl text-red-500">*</span>
-            </div>
+        <FormRow>
+          <div className="flex justify-start items-center gap-2">
+            <Label htmlFor="image">Cabin photo</Label>
+            <span className="text-3xl text-red-500">*</span>
+          </div>
 
-            {/* <input
-              {...register("image")}
-              type="file"
-              className="border-slate-400 border-2 
-        px-4 py-3 rounded-sm "
-            /> */}
-            <FileInput
-              name="image"
-              id="image"
-              accept="image/*"
-              type="file"
-              {...register("image", {
-                required: "this fiels is required",
-              })}
-            />
-          </FormRow>
+          <FileInput
+            name="image"
+            id="image"
+            accept="image/*"
+            type="file"
+            {...register("image", {
+              required: "this fiels is required",
+            })}
+          />
+        </FormRow>
 
-          <FormRow>
-            {/* type is an HTML attribute! */}
-            {/* <Button variation="secondary" type="reset"> */}
-            <button
-              onClick={() => handleCancelCreateCabin()}
-              className="bg-slate-400
-           text-white px-8 py-3 text-[1.8rem] rounded-lg"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit "
-              disabled={isCreating}
-              className="bg-[#4338ca]
-           text-white px-8 py-3 text-[1.8rem] rounded-lg"
-            >
-              {isCreating ? "please wait" : "Add new cabin"}
-            </button>
-          </FormRow>
-        </Form>
-      </div>
+        <FormRow>
+          <button
+            type="submit "
+            disabled={isCreating}
+            className="bg-[#4338ca]
+           text-white px-8 py-3 select-none text-[1.8rem] rounded-lg"
+          >
+            {isCreating ? "please wait" : "Add new cabin"}
+          </button>
+          <button
+            onClick={() => setIsOpenModal(false)}
+            className="cursor-pointer bg-gray-400
+           text-white select-none px-8 py-3 text-[1.8rem] 
+           rounded-lg"
+          >
+            Cancel
+          </button>
+        </FormRow>
+      </Form>
     </>
   );
 }

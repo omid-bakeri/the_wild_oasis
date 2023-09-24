@@ -3,18 +3,19 @@ import { createCabins } from "../../services/apiCabins";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-export default function CreateCabin({ setShowCreateCabin }) {
+export default function CreateCabin({ setIsOpenModal }) {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   const { isLoading: isCreating, mutate: createMutate } = useMutation({
     mutationFn: createCabins,
     onSuccess: () => {
+      
       toast.success("cabin successfully created");
       queryClient.invalidateQueries({
         queryKey: ["cabin"],
       });
 
-      setShowCreateCabin(false);
+      setIsOpenModal(false);
 
       navigate("/Cabins");
     },
