@@ -53,10 +53,17 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ isOpenModal, setIsOpenModal }) {
-  const { register, handleSubmit, reset, getValues } = useForm();
+function CreateCabinForm({ isOpenModal, setIsOpenModal, cabinToEdit = {} }) {
+  const { id: editID, ...editValues } = cabinToEdit;
+  const isEditSession = Boolean(editID);
+  const { register, handleSubmit, reset, getValues } = useForm({
+    defaultValues: isEditSession ? editValues : {},
+  });
 
-  const { isCreating, createMutate } = CreateCabin({ setIsOpenModal });
+  const { isCreating, createMutate } = CreateCabin({
+    setIsOpenModal,
+    isEditSession,
+  });
 
   function handleMaxCapacityCheck(value) {
     setCapacity(value);
@@ -154,7 +161,11 @@ function CreateCabinForm({ isOpenModal, setIsOpenModal }) {
         <FormRow>
           <div className="flex justify-start items-center gap-2">
             <Label htmlFor="image">Cabin photo</Label>
-            <span className="text-3xl text-red-500">*</span>
+            {isEditSession ? (
+              ""
+            ) : (
+              <span className="text-3xl text-red-500">*</span>
+            )}
           </div>
 
           <FileInput
@@ -163,7 +174,7 @@ function CreateCabinForm({ isOpenModal, setIsOpenModal }) {
             accept="image/*"
             type="file"
             {...register("image", {
-              required: "this fiels is required",
+              required: isEditSession ? "" : "this fiels is required",
             })}
           />
         </FormRow>
@@ -175,7 +186,11 @@ function CreateCabinForm({ isOpenModal, setIsOpenModal }) {
             className="bg-[#4338ca]
            text-white px-8 py-3 select-none text-[1.8rem] rounded-lg"
           >
-            {isCreating ? "please wait" : "Add new cabin"}
+            {isEditSession
+              ? "Edit Cabin"
+              : isCreating
+              ? "Please wait"
+              : "Create New Cabin"}
           </button>
           <button
             onClick={() => setIsOpenModal(false)}

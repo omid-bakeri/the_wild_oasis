@@ -21,7 +21,7 @@ export async function deleteCabins(id) {
   return data;
 }
 
-export async function createCabins(elementData) {
+export async function createCabins(elementData, id) {
   // 1. create cabin
 
   const imageName = `${elementData.image.name}`.replaceAll("/", "");
@@ -40,13 +40,35 @@ export async function createCabins(elementData) {
 
   // true
 
-  const { data, error } = await supabase
-    .from("cabins")
-    .insert({ ...elementData, image: imageUrl });
+  // create cabin
+  if (!id) {
+    const { data, error } = await supabase
+      .from("cabins")
+      .insert([{ ...elementData, image: imageUrl }]);
 
-  if (error) {
-    console.error(error);
-    throw new Error("Cabins could not be deleted.");
+    if (error) {
+      console.error(error);
+      throw new Error("Cabins could not be deleted.");
+    }
+    return data;
+  }
+
+  // edit cabin
+
+  if (id) {
+    const { data, error } = await supabase
+      .from("cabins")
+      .update({ ...elementData, image: imageUrl })
+      .eq("id", id)
+      .select();
+
+    if (error) {
+      console.error(error);
+      throw new Error("Cabins could not be edited.");
+    }
+
+    deleteCabins(id);
+    return data;
   }
 
   // 3. delete the cabin if image not uploaded
@@ -56,6 +78,4 @@ export async function createCabins(elementData) {
 
   //   toast.error("error can not upload image !");
   // }
-
-  return data;
 }

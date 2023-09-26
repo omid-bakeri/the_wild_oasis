@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 const StyledModal = styled.div`
@@ -17,7 +18,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(0 , 0 , 0 , .5);
+  background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(4px);
   z-index: 1000;
   transition: all 0.5s;
@@ -50,12 +51,11 @@ const Button = styled.button`
 `;
 
 function Modal({ children }) {
-  return (
-    <>
-      <Overlay>
+  return createPortal(
+    <Overlay>
       <StyledModal>{children}</StyledModal>
-      </Overlay>
-    </>
+    </Overlay>,
+    document.body
   );
 }
 

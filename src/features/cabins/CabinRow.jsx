@@ -4,10 +4,10 @@ import styled from "styled-components";
 import { formatCurrency } from "../../utils/helpers";
 import { FaTrash, FaEdit } from "react-icons/fa";
 import { Tooltip } from "react-tooltip";
-
 import "react-tooltip/dist/react-tooltip.css";
-
-import { DeleteCabin } from "./DeleteCabin";
+import DeleteCabinCheck from "./Delete/DeleteCabinCheck";
+import { useState } from "react";
+import EditCabin from "./Edit/EditCabin";
 const TableRow = styled.div`
   display: grid;
   grid-template-columns: 0.6fr 1.8fr 2.2rem;
@@ -53,9 +53,17 @@ const Discount = styled.div`
 `;
 
 function CabinRow({ cabin }) {
-  const { isDeleteing, deleteMutate } = DeleteCabin();
-
   const { name, maxCapacity, regularPrice, discount, image, id } = cabin;
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [editCabin, setEditCabin] = useState(false);
+
+  function handleDeleteElement(id) {
+    setConfirmDelete(true);
+  }
+  function handleEditCabin(id) {
+    setEditCabin(true);
+  }
   return (
     <>
       <div
@@ -76,8 +84,7 @@ function CabinRow({ cabin }) {
         )}
         <div className="flex gap-3">
           <button
-            onClick={() => deleteMutate(id)}
-            disabled={isDeleteing}
+            onClick={() => handleDeleteElement(id)}
             className="deleteAnchor text-red-500 text-2xl border-2
         rounded-xl
       border-red-500 px-4 py-2 select-none bg-slate-100"
@@ -104,19 +111,25 @@ function CabinRow({ cabin }) {
             Delete
           </Tooltip>
 
+          {confirmDelete && (
+            <DeleteCabinCheck id={id} setConfirmDelete={setConfirmDelete} />
+          )}
+
           <button
-            disabled={isDeleteing}
+            onClick={() => handleEditCabin(id)}
             className="text-[#3730a3] text-2xl editAnchor
                border-2
               rounded-xl
             border-[#3730a3] px-4 py-2 select-none bg-slate-100"
           >
             <div className="flex justify-center items-center gap-2">
-              {/* EDIT */}
               <FaEdit />
             </div>
           </button>
 
+          {editCabin && (
+            <EditCabin id={id} editCabin={editCabin} cabinToEdit={cabin} />
+          )}
           <Tooltip
             style={{
               backgroundColor: "white",

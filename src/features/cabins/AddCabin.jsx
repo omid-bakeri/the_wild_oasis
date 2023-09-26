@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useState } from "react";
 
 import CreateCabinForm from "./CreateCabinForm";
 import Modal from "../../ui/Modal";
@@ -9,6 +9,7 @@ function AddCabin() {
   function handleOpenCreateFormCabin() {
     setIsOpenModal((element) => !element);
   }
+
 
   return (
     <>

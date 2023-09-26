@@ -12,6 +12,7 @@ export function DeleteCabin() {
         queryKey: ["cabin"],
       });
 
+      
       toast.success("cabin successfully deleted!");
     },
 

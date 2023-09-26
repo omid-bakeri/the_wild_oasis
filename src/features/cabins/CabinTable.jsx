@@ -4,6 +4,7 @@ import { getCabins } from "../../services/apiCabins";
 import { useState } from "react";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+// import AddRow from "./AddRow";
 // import CabinRow from "./CabinRow";
 // import { useState } from "react";
 
@@ -79,6 +80,7 @@ function CabinTable() {
           <CabinRow key={cabin.id} cabin={cabin} />
         ))}
       </div>
+      {/* <AddRow /> */}
     </>
   );
 }
