@@ -37,7 +37,7 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-function CabinTable({ optionCheck }) {
+function CabinTable({ optionCheck, sortElement }) {
   // const [filterCheck, setFilterCheck] = useState(false);
 
   // eslint-disable-next-line no-unused-vars
@@ -61,8 +61,6 @@ function CabinTable({ optionCheck }) {
     return <Spinner />;
   }
 
-  console.log(optionCheck);
-
   let cabinDiscount;
 
   if (optionCheck && optionCheck === "with_discount") {
@@ -72,7 +70,20 @@ function CabinTable({ optionCheck }) {
   if (optionCheck && optionCheck === "no_discount") {
     cabinDiscount = cabins.filter((item) => item.discount === 0);
   }
-  console.log(cabinDiscount);
+
+  switch (sortElement) {
+    case "sort_by_price":
+      cabins.sort((a, b) => b.regularPrice - a.regularPrice);
+      break;
+    case "sort_by_discount":
+      cabins.sort((a, b) => b.discount - a.discount);
+      break;
+    case "sort_by_capacity":
+      cabins.sort((a, b) => b.maxCapacity - a.maxCapacity);
+      break;
+    case "default":
+      cabins.sort((a, b) => Number(a.name) - Number(b.name));
+  }
 
   // time to use react query
   return (

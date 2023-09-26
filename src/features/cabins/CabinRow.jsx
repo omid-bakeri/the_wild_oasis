@@ -117,7 +117,8 @@ function CabinRow({ cabin }) {
 
           <button
             onClick={() => handleEditCabin(id)}
-            className="text-[#3730a3] text-2xl editAnchor
+            className="text-[#3730a3] text-2xl 
+            editAnchor
                border-2
               rounded-xl
             border-[#3730a3] px-4 py-2 select-none bg-slate-100"
