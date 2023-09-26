@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
 import { getCabins } from "../../services/apiCabins";
@@ -36,7 +37,9 @@ const TableHeader = styled.header`
   padding: 1.6rem 2.4rem;
 `;
 
-function CabinTable() {
+function CabinTable({ optionCheck }) {
+  // const [filterCheck, setFilterCheck] = useState(false);
+
   // eslint-disable-next-line no-unused-vars
   const [status, setStatus] = useState();
 
@@ -57,6 +60,20 @@ function CabinTable() {
   if (isLoading) {
     return <Spinner />;
   }
+
+  console.log(optionCheck);
+
+  let cabinDiscount;
+
+  if (optionCheck && optionCheck === "with_discount") {
+    cabinDiscount = cabins.filter((item) => item.discount !== 0);
+  }
+
+  if (optionCheck && optionCheck === "no_discount") {
+    cabinDiscount = cabins.filter((item) => item.discount === 0);
+  }
+  console.log(cabinDiscount);
+
   // time to use react query
   return (
     <>
@@ -76,9 +93,22 @@ function CabinTable() {
       </div>
 
       <div className="w-[100%]">
-        {cabins.map((cabin) => (
-          <CabinRow key={cabin.id} cabin={cabin} />
-        ))}
+        {optionCheck &&
+          optionCheck === "with_discount" &&
+          cabinDiscount.map((cabin) => (
+            <CabinRow key={cabin.id} cabin={cabin} />
+          ))}
+        {optionCheck &&
+          optionCheck === "no_discount" &&
+          cabinDiscount.map((cabin) => (
+            <CabinRow key={cabin.id} cabin={cabin} />
+          ))}
+        {optionCheck &&
+          optionCheck === "all_cabins" &&
+          cabins.map((cabin) => <CabinRow key={cabin.id} cabin={cabin} />)}
+
+        {!optionCheck &&
+          cabins.map((cabin) => <CabinRow key={cabin.id} cabin={cabin} />)}
       </div>
       {/* <AddRow /> */}
     </>

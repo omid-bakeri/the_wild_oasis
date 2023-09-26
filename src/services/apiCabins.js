@@ -59,8 +59,7 @@ export async function createCabins(elementData, id) {
     const { data, error } = await supabase
       .from("cabins")
       .update({ ...elementData, image: imageUrl })
-      .eq("id", id)
-      .select();
+      .eq("id", id);
 
     if (error) {
       console.error(error);
