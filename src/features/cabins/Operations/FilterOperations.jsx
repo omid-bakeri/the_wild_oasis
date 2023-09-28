@@ -3,7 +3,7 @@ function FilterOperations({ setOptionCheck, optionCheck }) {
   function handleSetOption() {
     console.log(optionCheck);
   }
-  const optionStyle = "text-[#4338ca] h-4  bg-white";
+  const optionStyle = "text-[#4338ca] h-4 bg-white";
   return (
     <>
       <select

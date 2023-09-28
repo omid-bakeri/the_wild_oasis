@@ -5,6 +5,7 @@ import { getCabins } from "../../services/apiCabins";
 import { useState } from "react";
 import Spinner from "../../ui/Spinner";
 import CabinRow from "./CabinRow";
+import { toast } from "react-hot-toast";
 // import AddRow from "./AddRow";
 // import CabinRow from "./CabinRow";
 // import { useState } from "react";
@@ -61,6 +62,10 @@ function CabinTable({ optionCheck, sortElement }) {
     return <Spinner />;
   }
 
+  if (error) {
+    toast.error("Booking can not be loaded");
+  }
+
   let cabinDiscount;
 
   if (optionCheck && optionCheck === "with_discount") {
@@ -92,7 +97,7 @@ function CabinTable({ optionCheck, sortElement }) {
         className="bg-slate-200
     rounded-sm px-4 py-4 grid grid-cols-6 
     font-bold text-3xl
-     text-gray-600 w-full
+     text-gray-700 w-full
       justify-items-start"
       >
         <div></div>
@@ -121,7 +126,6 @@ function CabinTable({ optionCheck, sortElement }) {
         {!optionCheck &&
           cabins.map((cabin) => <CabinRow key={cabin.id} cabin={cabin} />)}
       </div>
-      {/* <AddRow /> */}
     </>
   );
 }

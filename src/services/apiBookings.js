@@ -1,9 +1,22 @@
 import { getToday } from "../utils/helpers.js";
 import supabase from "./supabase";
 
+export async function getAllBookings() {
+  let { data: booking, error } = await supabase
+    .from("booking")
+    .select("* , cabins(*)  , guests(*)");
+
+  if (error) {
+    console.error(error);
+    throw new Error("Booking not found");
+  }
+
+  return booking;
+}
+
 export async function getBooking(id) {
   const { data, error } = await supabase
-    .from("bookings")
+    .from("booking")
     .select("*, cabins(*), guests(*)")
     .eq("id", id)
     .single();

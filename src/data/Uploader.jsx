@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { isFuture, isPast, isToday } from "date-fns";
 import supabase from "../services/supabase";
-import Button from "../ui/Button.jsx";
+// import Button from "../ui/Button.jsx";
 import { subtractDates } from "../utils/helpers.js";
 
 import { bookings } from "./data-bookings.js";
 import { cabins } from "./data-cabins.js";
 import { guests } from "./data-guests.js";
+// import { toast } from "react-hot-toast";
 
 // const originalSettings = {
 //   minBookingLength: 3,
@@ -26,7 +27,7 @@ async function deleteCabins() {
 }
 
 async function deleteBookings() {
-  const { error } = await supabase.from("bookings").delete().gt("id", 0);
+  const { error } = await supabase.from("booking").delete().gt("id", 0);
   if (error) console.log(error.message);
 }
 
@@ -55,7 +56,7 @@ async function createBookings() {
 
   const finalBookings = bookings.map((booking) => {
     // Here relying on the order of cabins, as they don't have and ID yet
-    const cabin = cabins.at(booking.cabinId - 1);
+    const cabin = cabins.at(booking.cabinID - 1);
     const numNights = subtractDates(booking.endDate, booking.startDate);
     const cabinPrice = numNights * (cabin.regularPrice - cabin.discount);
     const extrasPrice = booking.hasBreakfast
@@ -88,16 +89,17 @@ async function createBookings() {
       cabinPrice,
       extrasPrice,
       totalPrice,
-      guestId: allGuestIds.at(booking.guestId - 1),
-      cabinId: allCabinIds.at(booking.cabinId - 1),
+      guestID: allGuestIds.at(booking.guestID - 1),
+      cabinID: allCabinIds.at(booking.cabinID - 1),
       status,
     };
   });
 
   console.log(finalBookings);
 
-  const { error } = await supabase.from("bookings").insert(finalBookings);
-  if (error) console.log(error.message);
+  const { data } = await supabase.from("booking").insert(finalBookings);
+
+  return data;
 }
 
 function Uploader() {
@@ -120,10 +122,12 @@ function Uploader() {
 
   async function uploadBookings() {
     setIsLoading(true);
-    await deleteBookings();
+    // await deleteBookings();
     await createBookings();
     setIsLoading(false);
   }
+
+  const buttonStyle = "py-2 ";
 
   return (
     <div
@@ -140,13 +144,21 @@ function Uploader() {
     >
       <h3>SAMPLE DATA</h3>
 
-      <Button onClick={uploadAll} disabled={isLoading}>
+      <button
+        className={`${buttonStyle} bg-blue-300`}
+        onClick={uploadAll}
+        disabled={isLoading}
+      >
         Upload ALL
-      </Button>
+      </button>
 
-      <Button onClick={uploadBookings} disabled={isLoading}>
+      <button
+        className={`${buttonStyle} bg-pink-300`}
+        onClick={uploadBookings}
+        disabled={isLoading}
+      >
         Upload bookings ONLY
-      </Button>
+      </button>
     </div>
   );
 }

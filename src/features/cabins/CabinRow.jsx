@@ -64,15 +64,12 @@ function CabinRow({ cabin }) {
   function handleEditCabin(id) {
     setEditCabin(true);
   }
+
+  const rowStyle =
+    "rounded-sm px-7 w-full bg-slate-200 mt-1 py-10 grid grid-cols-6 font-bold text-3xl text-gray-600 justify-items-start items-center";
   return (
     <>
-      <div
-        className="rounded-sm px-7 
-      w-full bg-slate-200 mt-1 py-10 grid 
-      grid-cols-6 font-bold text-3xl
-       text-gray-600 justify-items-start 
-       items-center"
-      >
+      <div className={`${rowStyle}`}>
         <Img className="select-none z-1" src={image} />
         <Cabin>{name}</Cabin>
         <div className="text-2xl">Fits up {maxCapacity} guests</div>

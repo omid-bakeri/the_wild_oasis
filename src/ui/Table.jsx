@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import styled from "styled-components";
 
 const StyledTable = styled.div`
@@ -16,7 +17,6 @@ const CommonRow = styled.div`
   align-items: center;
   transition: none;
 `;
-
 const StyledHeader = styled(CommonRow)`
   padding: 1.6rem 2.4rem;
 
@@ -58,3 +58,4 @@ const Empty = styled.p`
   text-align: center;
   margin: 2.4rem;
 `;
+
