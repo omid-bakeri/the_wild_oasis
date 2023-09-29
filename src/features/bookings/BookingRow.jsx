@@ -102,15 +102,16 @@ function BookingRow({ bookings, key }) {
         </Stacked>
 
         <div
-          className={`text-xl select-none px-8 py-2 rounded-lg 
+          className={`text-xl  select-none 
+          px-6 py-2 rounded-l-full rounded-r-full
           flex items-center justify-center 
         font-small uppercase ${
           statusUpdate === "CHECKED IN"
-            ? "bg-green-300 text-green-800"
+            ? "bg-green-300 text-green-700"
             : statusUpdate === "UNCONFIRMED"
-            ? "bg-blue-200 text-blue-800"
+            ? "bg-blue-200 text-blue-700"
             : statusUpdate === "CHECKED OUT"
-            ? "bg-red-200 text-red-800"
+            ? "bg-red-200 text-red-700"
             : ""
         }`}
         >

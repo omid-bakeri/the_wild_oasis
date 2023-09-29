@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable react/prop-types */
 
 import { useQuery } from "@tanstack/react-query";
@@ -5,6 +6,8 @@ import BookingRow from "./BookingRow";
 import { getAllBookings } from "../../services/apiBookings";
 import Spinner from "../../ui/Spinner";
 import { toast } from "react-hot-toast";
+import Pagination from "../../ui/Pagination";
+// import { useSearchParams } from "react-router-dom";
 
 function BookingTable({ filterBookings, sortBookings }) {
   const {
@@ -12,7 +15,7 @@ function BookingTable({ filterBookings, sortBookings }) {
     data: bookings,
     error,
   } = useQuery({
-    queryFn: getAllBookings,
+    queryFn: () => getAllBookings(),
     queryKey: ["booking"],
   });
 
@@ -20,11 +23,13 @@ function BookingTable({ filterBookings, sortBookings }) {
     return <Spinner />;
   }
 
+  const PAGE_SIZE = 6 ; 
+  const bookingsLength = bookings.length;
+  const pagesCount = Math.ceil(bookingsLength / PAGE_SIZE);
+
   if (error) {
     toast.error("Bookings can not be loaded");
   }
-
-  console.log(sortBookings);
 
   let bookingFilter;
   if (filterBookings && filterBookings === "checked_in") {
@@ -39,7 +44,6 @@ function BookingTable({ filterBookings, sortBookings }) {
     bookingFilter = bookings.filter((item) => item.status === "unconfirmed");
   }
 
-  console.log(bookings);
   switch (sortBookings) {
     case "default":
       bookings.sort((a, b) => a.cabins.name - b.cabins.name);
@@ -56,9 +60,7 @@ function BookingTable({ filterBookings, sortBookings }) {
       );
       break;
     case "sort_by_guests(email)":
-      bookings.sort((a, b) =>
-        a.guests.email.localeCompare(b.guests.email)
-      );
+      bookings.sort((a, b) => a.guests.email.localeCompare(b.guests.email));
       break;
   }
 
@@ -104,6 +106,7 @@ function BookingTable({ filterBookings, sortBookings }) {
             <BookingRow bookings={item} key={item.id} />
           ))}
       </div>
+      <Pagination bookingsLength={bookingsLength} pagesCount={pagesCount} />
     </>
   );
 }

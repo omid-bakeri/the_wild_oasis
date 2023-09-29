@@ -1,13 +1,15 @@
+import { toast } from "react-hot-toast";
 import { getToday } from "../utils/helpers.js";
 import supabase from "./supabase";
 
 export async function getAllBookings() {
-  let { data: booking, error } = await supabase
+  let query = await supabase
     .from("booking")
-    .select("* , cabins(*)  , guests(*)");
+    .select("* , cabins(name)  , guests(fullname , email)");
 
+  const { data: booking, error } = query;
   if (error) {
-    console.error(error);
+    toast.error("please check your internet");
     throw new Error("Booking not found");
   }
 
