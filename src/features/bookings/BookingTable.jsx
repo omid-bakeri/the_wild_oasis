@@ -7,10 +7,15 @@ import { getAllBookings } from "../../services/apiBookings";
 import Spinner from "../../ui/Spinner";
 import { toast } from "react-hot-toast";
 import Pagination from "../../ui/Pagination";
+import { useSearchParams } from "react-router-dom";
+import { useState } from "react";
 // import { useSearchParams } from "react-router-dom";
 
 function BookingTable({ filterBookings, sortBookings }) {
-  const {
+  const [checked, setChcecked] = useState(false);
+  const [params] = useSearchParams();
+
+  let {
     isLoading,
     data: bookings,
     error,
@@ -22,10 +27,6 @@ function BookingTable({ filterBookings, sortBookings }) {
   if (isLoading) {
     return <Spinner />;
   }
-
-  const PAGE_SIZE = 6 ; 
-  const bookingsLength = bookings.length;
-  const pagesCount = Math.ceil(bookingsLength / PAGE_SIZE);
 
   if (error) {
     toast.error("Bookings can not be loaded");
@@ -62,6 +63,24 @@ function BookingTable({ filterBookings, sortBookings }) {
     case "sort_by_guests(email)":
       bookings.sort((a, b) => a.guests.email.localeCompare(b.guests.email));
       break;
+  }
+
+  // Pagination
+  const PAGE_SIZE = 6;
+  const bookingsLength = bookings.length;
+
+  const pagesCount = Math.ceil(bookingsLength / PAGE_SIZE);
+
+  const parameters = !params.get("page") ? 1 : params.get("page");
+  const from = (parameters - 1) * PAGE_SIZE; // 0
+  const to =
+    bookingsLength > parameters * PAGE_SIZE + 1 ? parameters * PAGE_SIZE  : bookingsLength; //6
+
+  if (!params.get("page")) {
+    bookings = bookings.slice(from, to);
+  }
+  if ((params.get("page") && !checked) || checked) {
+    bookings = bookings.slice(from, to);
   }
 
   return (
@@ -106,7 +125,12 @@ function BookingTable({ filterBookings, sortBookings }) {
             <BookingRow bookings={item} key={item.id} />
           ))}
       </div>
-      <Pagination bookingsLength={bookingsLength} pagesCount={pagesCount} />
+      <Pagination
+        bookingsLength={bookingsLength}
+        pagesCount={pagesCount}
+        checked={checked}
+        setChcecked={setChcecked}
+      />
     </>
   );
 }

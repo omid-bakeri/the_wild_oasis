@@ -61,24 +61,24 @@ import { useState } from "react";
 //   }
 // `;
 
-function Pagination({ bookingsLength }) {
-  const pagesCount = Math.ceil(bookingsLength / 6);
+function Pagination({ bookingsLength, checked, setChcecked, pagesCount }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [checked, setChcecked] = useState(false);
+
   let currentPage;
 
   function handlePageChange(data) {
     currentPage = data.selected + 1;
 
+    setChcecked(true);
     searchParams.set("page", currentPage);
     setSearchParams(searchParams);
-
-    console.log(currentPage);
   }
   return (
     <ReactPaginate
       className="flex select-none text-3xl mt-2
-       gap-5 bg-red-400 py-6
+       gap-5 bg-gradient-to-r from-indigo-500 from-10%
+        via-sky-500 via-30% to-emerald-500 to-90%
+       py-6
         justify-center items-center px-8"
       previousLabel={"previous"}
       pageCount={pagesCount}
@@ -90,7 +90,7 @@ function Pagination({ bookingsLength }) {
       pageClassName="  flex p-4
        justify-center items-center text-red-100"
       breakClassName="text-gray-300"
-      activeClassName="bg-red-200 p-6"
+      activeClassName="bg-indigo-500 p-6"
       nextClassName={`text-gray-100 `}
       previousClassName="text-gray-100"
       pageLinkClassName="text-white"
