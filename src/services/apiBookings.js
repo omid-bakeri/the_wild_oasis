@@ -16,12 +16,10 @@ export async function getAllBookings() {
   return booking;
 }
 
-export async function getBooking(id) {
+export async function getBooking() {
   const { data, error } = await supabase
     .from("booking")
-    .select("*, cabins(*), guests(*)")
-    .eq("id", id)
-    .single();
+    .select("*, cabins(*), guests(*)");
 
   if (error) {
     console.error(error);
@@ -102,11 +100,11 @@ export async function updateBooking(id, obj) {
 
 export async function deleteBooking(id) {
   // REMEMBER RLS POLICIES
-  const { data, error } = await supabase.from("bookings").delete().eq("id", id);
+  const { data, error } = await supabase.from("booking").delete().eq("id", id);
 
   if (error) {
     console.error(error);
-    throw new Error("Booking could not be deleted");
+    toast.error("Booking could not be deleted!");
   }
   return data;
 }

@@ -2,10 +2,13 @@
 /* eslint-disable no-unused-vars */
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
-
+import { BsEye } from "react-icons/bs";
 import { formatCurrency } from "../../utils/helpers.js";
 import { formatDistanceFromNow } from "../../utils/helpers.js";
-
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useState } from "react";
 const Cabin = styled.div`
   font-size: 1.6rem;
   font-weight: 600;
@@ -60,6 +63,14 @@ function BookingRow({ bookings, key }) {
   } = bookings;
 
   const statusUpdate = status.toUpperCase();
+  const navigate = useNavigate();
+  const [bookingDetails, setBookingDetails] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  function handleBooking(id) {
+    navigate(`/bookings/${id}`);
+    
+  }
 
   return (
     <>
@@ -124,6 +135,29 @@ function BookingRow({ bookings, key }) {
         >
           {formatCurrency(totalPrice)}
         </Amount>
+
+        <BsEye
+          onClick={() => handleBooking(id)}
+          className="relative ShowMoreAnchor
+           hover:cursor-pointer
+          rounded-full "
+        />
+
+        <Tooltip
+          style={{
+            backgroundColor: "white",
+            color: "black",
+            ShadowRoot: "2xl",
+            fontWeight: "600",
+            fontSize: "1.5rem",
+            border: "4px solid black",
+          }}
+          className="text-sm"
+          anchorSelect=".ShowMoreAnchor"
+          place="left"
+        >
+          show detail
+        </Tooltip>
       </div>
     </>
   );

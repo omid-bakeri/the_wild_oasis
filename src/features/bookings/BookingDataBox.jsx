@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import styled from "styled-components";
 import { format, isToday } from "date-fns";
 import {
@@ -102,8 +103,10 @@ const Footer = styled.footer`
 `;
 
 // A purely presentational component
+// eslint-disable-next-line react/prop-types
 function BookingDataBox({ booking }) {
   const {
+    // eslint-disable-next-line react/prop-types
     created_at,
     startDate,
     endDate,
