@@ -3,10 +3,13 @@ import Logo from "../../ui/Logo";
 import { toast } from "react-hot-toast";
 import { AiFillEye } from "react-icons/ai";
 import { AiFillEyeInvisible } from "react-icons/ai";
+import { useLoginAuth } from "./useLoginAuth";
 function LoginForm() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [eye, setEye] = useState(false);
+
+  const { isLoading, login } = useLoginAuth();
 
   function handleSubmitForm(e) {
     e.preventDefault();
@@ -15,8 +18,7 @@ function LoginForm() {
       toast.error("please fill in all fields!");
     }
 
-    console.log(email);
-    console.log(password);
+    login({ email, password });
   }
 
   return (
@@ -75,13 +77,13 @@ function LoginForm() {
           >
             {!eye && (
               <AiFillEye
-                className="text-3xl
+                className="text-3xl text-gray-400
               "
               />
             )}
             {eye && (
               <AiFillEyeInvisible
-                className="text-3xl
+                className="text-3xl text-gray-400
               "
               />
             )}
@@ -92,7 +94,7 @@ function LoginForm() {
          text-white text-center 
         p-4  w-full rounded-xl mt-10"
         >
-          Login
+          {!isLoading ? "Login" : "Please wait ..."}
         </button>
       </form>
     </>
