@@ -280,21 +280,21 @@ function Details({ booking, id }) {
 
       <div className="absolute bottom-16 ">
         {
-          <button
-            onClick={() => setCheckDelete(true)}
-            className="flex
-          border-red-500 border-4  hover:bg-red-500 hover:text-white text-3xl
-          text-red-500 px-8 py-4 
-          rounded-r-full rounded-l-full focus:outline-none
-           justify-center items-center gap-4"
-          >
-            <i>
-              <AiOutlineDelete />
-            </i>
-            <button className="focus:outline-none">
-              Delete Booking number #{id}
-            </button>
-          </button>
+          // <button
+          //   onClick={() => setCheckDelete(true)}
+          //   className="flex
+          // border-red-500 border-4  hover:bg-red-500 hover:text-white text-3xl
+          // text-red-500 px-8 py-4
+          // rounded-r-full rounded-l-full focus:outline-none
+          //  justify-center items-center gap-4"
+          // >
+          //   <i>
+          //     <AiOutlineDelete />
+          //   </i>
+          //   <button className="focus:outline-none">
+          //     Delete Booking number #{id}
+          //   </button>
+          // </button>
         }
       </div>
 
