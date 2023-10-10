@@ -120,7 +120,8 @@ function CabinRow({ cabin }) {
               rounded-xl
             border-[#3730a3] px-4 py-2 select-none bg-slate-100"
           >
-            <div className="flex justify-center items-center gap-2">
+            <div className="flex justify-center
+             items-center gap-2">
               <FaEdit />
             </div>
           </button>

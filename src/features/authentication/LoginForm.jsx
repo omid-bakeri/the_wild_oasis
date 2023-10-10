@@ -16,6 +16,7 @@ function LoginForm() {
 
     if (!password || !email) {
       toast.error("please fill in all fields!");
+      return;
     }
 
     login({ email, password });

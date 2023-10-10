@@ -4,12 +4,15 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export function useLoginAuth() {
+  // const queryClient = useQueryClient();
+
   const navigate = useNavigate();
 
   const { isLoading, mutate: login } = useMutation({
     mutationFn: ({ email, password }) => Login({ email, password }),
     onSuccess: () => {
-      toast.success("succeddfully logined");
+      // queryClient.setQueryData(["user"], user);
+      toast.success("successfully logined");
       navigate(`/dashboard`);
     },
     onError: () => {
