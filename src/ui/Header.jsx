@@ -15,17 +15,18 @@ const Header = () => {
     flex items-center justify-end gap-4"
       >
         {!isAuthenticated && (
-          <button
-            className="p-2 LogoutAnchor
+          <Link to="/login">
+            <button
+              className="p-2 LogoutAnchor
        border-2 rounded-lg border-gray-500"
-          >
-            <Link to="/login">
+            >
               <AiOutlineUser
-                className="text-4xl AccountAnchor text-gray-400
-       hover:text-gray-500 hover:cursor-pointer"
+                className="text-4xl outline-none 
+                AccountAnchor text-gray-400
+              hover:text-gray-500 hover:cursor-pointer"
               />
-            </Link>
-          </button>
+            </button>
+          </Link>
         )}
 
         {isAuthenticated && <Logout />}
