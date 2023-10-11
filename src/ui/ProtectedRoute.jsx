@@ -1,8 +1,8 @@
 // import { styled } from "@tanstack/react-query-devtools/build/lib/utils";
-import { useUser } from "../features/authentication/useUser";
+// import { useUser } from "../features/authentication/useUser";
 // import { Spinner } from "../ui/Spinner";
-import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+// import { useNavigate } from "react-router-dom";
+// import { useEffect } from "react";
 
 // const FullPage = styled.div`
 //   height: 100vh;
@@ -43,17 +43,17 @@ import { useEffect } from "react";
 // export default ProtectedRoute;
 
 function ProtectedRoute({ children }) {
-  const navigate = useNavigate();
-  const { isLoading, isAuthenticated } = useUser();
+  // const navigate = useNavigate();
+  // const { isLoading, isAuthenticated } = useUser();
 
-  useEffect(
-    function () {
-      if (!isAuthenticated && !isLoading) {
-        navigate(`/login`);
-      }
-    },
-    [isAuthenticated, isLoading, navigate]
-  );
+  // useEffect(
+  //   function () {
+  //     if (!isAuthenticated && !isLoading) {
+  //       navigate(`/login`);
+  //     }
+  //   },
+  //   [isAuthenticated, isLoading, navigate]
+  // );
 
   return children;
 }
