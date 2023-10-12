@@ -1,4 +1,7 @@
 // import Heading from "../ui/Heading";
+// import { SignupForm } from "../features/authentication/SignupForm";
+import Signup from "../features/authentication/Signup";
+import Heading from "../ui/Heading";
 
 // import { useState } from "react";
 // import Modal from "../ui/Modal";
@@ -9,14 +12,17 @@ function NewUsers() {
 
   return (
     <>
-      <button
+      <Heading as="h1">Create a new user</Heading>
+      <Signup />
+      {/* <SignupForm /> */}
+      {/* <button
         // onClick={() => setModalCheck(true)}
         className="bg-[#4338ca] px-8 py-4 text-white text-3xl 
     outline-none rounded-lg shadow-lg mt-10 select-none flex 
     justify-center items-center focus:outline-2xl border-2 border-[#4338ca]"
       >
         Add new user
-      </button>
+      </button> */}
 
       {/* {ModalCheck && (
         <Modal>
