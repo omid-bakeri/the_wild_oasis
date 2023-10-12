@@ -2,10 +2,9 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
 
-  /* Colors adapted from https://tailwindcss.com/docs/customizing-colors */
 
   :root {
-    /* Indigo */
+ 
     --color-brand-50: #eef2ff;
     --color-brand-100: #e0e7ff;
     --color-brand-200: #c7d2fe;
@@ -54,10 +53,11 @@ const GlobalStyles = createGlobalStyle`
     --border-radius-md: 7px;
     --border-radius-lg: 9px;
 
-    /* For dark mode */
     --image-grayscale: 0;
     --image-opacity: 100%;
   }
+
+  
 
   *,
   *::before,

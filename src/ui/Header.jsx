@@ -12,7 +12,7 @@ const Header = () => {
   return (
     <>
       <div
-        className="bg-[#f9f9f9] p-10 
+        className="bg-slate-50 p-10 
     flex items-center justify-end gap-4"
       >
         {!isAuthenticated && (
