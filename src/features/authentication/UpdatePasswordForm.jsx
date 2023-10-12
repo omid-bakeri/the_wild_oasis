@@ -1,65 +1,80 @@
 import { useForm } from "react-hook-form";
-import Button from "../../ui/Button.jsx";
-import Form from "../../ui/Form.jsx";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-
-import { useUpdateUser } from "./useUpdateUser";
+import { useUpdatePassword } from "./useUpdateUser";
 
 function UpdatePasswordForm() {
-  const { register, handleSubmit, formState, getValues, reset } = useForm();
-  const { errors } = formState;
+  const { isLoading, updatePassword } = useUpdatePassword();
 
-  const { updateUser, isUpdating } = useUpdateUser();
-
+  const { register, handleSubmit, getValues } = useForm();
   function onSubmit({ password }) {
-    updateUser({ password }, { onSuccess: reset });
+    console.log(password);
+    updatePassword({ password });
   }
-
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow
-        label="Password (min 8 characters)"
-        error={errors?.password?.message}
+    <>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-[50%] 
+         bg-white p-10"
       >
-        <Input
+        <label
+          className="font-bold text-xl pt-4 pb-4 text-gray-600 
+        justify-start flex items-center"
+        >
+          Enter new password (8 chars){" "}
+        </label>
+        <input
+          name="password"
+          autoComplete="password"
           type="password"
-          id="password"
-          autoComplete="current-password"
-          disabled={isUpdating}
           {...register("password", {
-            required: "This field is required",
+            required: "this field is required",
             minLength: {
               value: 8,
-              message: "Password needs a minimum of 8 characters",
+              message: "password should be more then 8 chars",
             },
           })}
+          className="p-4 rounded-xl w-full
+         border-2"
         />
-      </FormRow>
-
-      <FormRow
-        label="Confirm password"
-        error={errors?.passwordConfirm?.message}
-      >
-        <Input
+        <label
+          className="font-bold text-xl pt-4 pb-4 text-gray-600 
+        justify-start flex items-center"
+        >
+          confirm password
+        </label>
+        <input
+          name="repassword"
+          autoComplete="repassword"
           type="password"
-          autoComplete="new-password"
-          id="passwordConfirm"
-          disabled={isUpdating}
-          {...register("passwordConfirm", {
-            required: "This field is required",
+          {...register("repassword", {
+            required: "this field is required",
             validate: (value) =>
-              getValues().password === value || "Passwords need to match",
+              value === getValues().password || "password need to match",
           })}
+          className="p-4 rounded-xl w-full
+         border-2"
         />
-      </FormRow>
-      <FormRow>
-        <Button onClick={reset} type="reset" variation="secondary">
-          Cancel
-        </Button>
-        <Button disabled={isUpdating}>Update password</Button>
-      </FormRow>
-    </Form>
+
+        <div className="flex gap-4 justify-center items-center">
+          <button
+            type="reset"
+            className="bg-gray-400 select-none
+         text-white text-center 
+        p-4  w-full rounded-xl mt-10"
+          >
+            Cancel
+          </button>
+          <button
+            disabled={isLoading}
+            className="bg-[#4338ca] select-none
+         text-white text-center 
+        p-4  w-full rounded-xl mt-10"
+          >
+            Update Password
+          </button>
+        </div>
+      </form>
+    </>
   );
 }
 

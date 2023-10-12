@@ -1,57 +1,96 @@
-/* eslint-disable no-unused-vars */
-import { useState } from "react";
-
-import Button from "../../ui/Button.jsx";
-import FileInput from "../../ui/FileInput.jsx";
-import Form from "../../ui/Form.jsx";
-import FormRow from "../../ui/FormRow";
-import Input from "../../ui/Input";
-
+/* eslint-disable react/jsx-no-duplicate-props */
+import { BsCheckCircleFill } from "react-icons/bs";
+import { AiFillWarning } from "react-icons/ai";
 import { useUser } from "./useUser";
 
 function UpdateUserDataForm() {
-  // We don't need the loading state, and can immediately use the user data, because we know that it has already been loaded at this point
-  const {
-    user: {
-      email,
-      user_metadata: { fullName: currentFullName },
-    },
-  } = useUser();
-
-  const [fullName, setFullName] = useState(currentFullName);
-  const [avatar, setAvatar] = useState(null);
-
-  function handleSubmit(e) {
-    e.preventDefault();
-  }
+  const { user } = useUser();
+  console.log(user);
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <FormRow label="Email address">
-        <Input value={email} disabled />
-      </FormRow>
-      <FormRow label="Full name">
-        <Input
-          type="text"
-          value={fullName}
-          onChange={(e) => setFullName(e.target.value)}
-          id="fullName"
+    <>
+      <form
+        className="w-[50%] 
+         bg-white p-10"
+      >
+        <label
+          className="font-bold text-xl pt-4 pb-4 text-gray-600 
+        justify-start flex items-center"
+        >
+          Email address{" "}
+        </label>
+        <input
+          autoComplete="email"
+          type="email"
+          value={user.email}
+          disabled
+          className="p-4 rounded-xl w-full
+         border-2"
         />
-      </FormRow>
-      <FormRow label="Avatar image">
-        <FileInput
-          id="avatar"
-          accept="image/*"
-          onChange={(e) => setAvatar(e.target.files[0])}
+        <label
+          className="font-bold text-xl pt-4 pb-4 text-gray-600 
+        justify-start flex items-center"
+        >
+          status{" "}
+        </label>
+        <div className="flex relative justify-end  items-center">
+          <input
+            autoComplete="email"
+            type="email"
+            value={user.role}
+            disabled
+            className={`p-4 rounded-xl w-full
+          ${user.aud === "authenticated" ? "bg-green-500" : "bg-yellow-500"}
+         border-2`}
+          />
+          <i className="absolute mr-4">
+            {user.role === "authenticated" ? (
+              <BsCheckCircleFill className="text-green-500 text-4xl" />
+            ) : (
+              <AiFillWarning className="text-yellow-500 text-4xl" />
+            )}
+          </i>
+        </div>
+        <label
+          className="font-bold text-xl pt-4 pb-4 text-gray-600 
+        justify-start flex items-center"
+        >
+          Email Confirm at{" "}
+        </label>
+        <input
+          autoComplete="email"
+          type="email"
+          value={user.email_confirmed_at}
+          disabled
+          className="p-4 rounded-xl w-full
+         border-2"
         />
-      </FormRow>
-      <FormRow>
-        <Button type="reset" variation="secondary">
-          Cancel
-        </Button>
-        <Button>Update account</Button>
-      </FormRow>
-    </Form>
+
+        <label
+          className="font-bold text-xl pt-4 pb-4 text-gray-600 
+        justify-start flex items-center"
+        >
+          Last Sign in{" "}
+        </label>
+        <input
+          autoComplete="email"
+          type="email"
+          value={user.identities.at(0).last_sign_in_at}
+          disabled
+          className="p-4 rounded-xl w-full
+         border-2"
+        />
+
+        {/* <button
+          className="bg-[#4338ca] select-none
+         text-white text-center 
+        p-4  w-full rounded-xl mt-10"
+        >
+          Update Account
+        </button> */}
+      </form>
+      
+    </>
   );
 }
 

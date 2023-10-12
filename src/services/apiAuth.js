@@ -31,6 +31,18 @@ export async function Login({ email, password }) {
   return data;
 }
 
+export async function updatePassword({ password }) {
+  let { data, error } = await supabase.auth.updateUser({
+    password,
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
 export async function getCurrentUser() {
   const { data: session } = await supabase.auth.getSession();
   if (!session.session) {
