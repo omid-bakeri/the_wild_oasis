@@ -11,7 +11,7 @@ function Logout() {
         disabled={isLoading}
         onClick={logout}
         className="p-2 LogoutAnchor
-       border-2 rounded-lg border-red-500"
+       border-2 rounded-lg border-red-300"
       >
         <ImExit
           className="text-4xl  text-red-400
@@ -30,7 +30,7 @@ function Logout() {
         }}
         className="text-sm"
         anchorSelect=".LogoutAnchor"
-        place="left"
+        place="bottom"
       >
         Logout
       </Tooltip>
