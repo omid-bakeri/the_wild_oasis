@@ -1,12 +1,20 @@
 /* eslint-disable react/no-unknown-property */
 import { useForm } from "react-hook-form";
+import { useSignup } from "./useSignup";
 
 function Signup() {
-  const { register, formState, getValues, handleSubmit } = useForm();
+  const { isLaoding, Signup } = useSignup();
+
+  const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
-  function onSubmit(data) {
-    console.log(data);
+  function onSubmit({ fullname, email, password }) {
+    Signup(
+      { fullname, email, password },
+      {
+        onSettled: reset,
+      }
+    );
   }
   return (
     <>
@@ -105,7 +113,7 @@ function Signup() {
          text-white text-center 
         p-4  w-full rounded-xl mt-10"
         >
-          Create new user
+          {!isLaoding ? "Create new user" : "please wait ..."}
         </button>
       </form>
     </>
