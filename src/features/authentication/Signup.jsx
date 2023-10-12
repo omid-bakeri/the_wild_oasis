@@ -108,13 +108,24 @@ function Signup() {
             rounded-xl w-1/2 
             border-2"
         />
-        <button
-          className="bg-[#4338ca] select-none
+        <div className="flex gap-4 items-center justify-center ">
+          <button
+            type="reset"
+            className="bg-slate-400 select-none
          text-white text-center 
-        p-4  w-full rounded-xl mt-10"
-        >
-          {!isLaoding ? "Create new user" : "please wait ..."}
-        </button>
+        p-4  w-1/2 rounded-xl mt-10 focus:outline-slate-400"
+          >
+            cancel
+          </button>
+          <button
+            disabled={isLaoding}
+            className="bg-[#4338ca] select-none
+         text-white text-center 
+        p-4  w-1/2 rounded-xl mt-10"
+          >
+            {!isLaoding ? "Create new user" : "please wait ..."}
+          </button>
+        </div>
       </form>
     </>
   );
