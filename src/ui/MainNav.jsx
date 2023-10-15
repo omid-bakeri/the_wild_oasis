@@ -5,7 +5,8 @@ import {HiOutlineCalendarDays} from "react-icons/hi2";
 import {HiOutlineHomeModern} from "react-icons/hi2";
 import {HiOutlineUsers} from "react-icons/hi2";
 import {HiOutlineCog8Tooth} from "react-icons/hi2";
-
+// import { useContext } from "react";
+// import {modeContext} from "../features/DarkMode"
 
 // eslint-disable-next-line no-unused-vars
 const NavList = styled.ul`
@@ -53,6 +54,7 @@ const StyledNavLink = styled(NavLink)`
   }
 `;
  const MainNav = () => {
+    // const [darkmode, setDarkMode] = useContext(modeContext);
     return (
         <>
            <nav>

@@ -7,13 +7,19 @@ import Logout from "../features/authentication/Logout";
 import { useUser } from "../features/authentication/useUser";
 import EditInformation from "../features/authentication/EditInformation";
 import ShowInformation from "../features/authentication/ShowInformation";
+import { useContext } from "react";
+import { modeContext } from "../features/DarkMode/DarkModeProvider";
 const Header = () => {
   const { isAuthenticated } = useUser();
+  const [darkmode] = useContext(modeContext);
+
+
   return (
     <>
       <div
-        className="bg-slate-50 p-10 
-    flex items-center justify-end gap-4"
+        className={` p-10 
+        ${darkmode ? "bg-slate-800" : "bg-slate-100"}
+    flex items-center justify-end gap-4`}
       >
         {!isAuthenticated && (
           <Link to="/login">

@@ -2,6 +2,8 @@ import { Outlet } from "react-router-dom";
 import Sidebar from "./Sidebar.jsx";
 import Header from "./Header.jsx";
 import styled from "styled-components";
+import { useContext } from "react";
+import { modeContext } from "../features/DarkMode/DarkModeProvider.jsx";
 
 const StyledAppLayout = styled.div`
   display: grid;
@@ -16,15 +18,17 @@ const Container = styled.div`
 `;
 const Main = styled.main`
   overflow: scroll;
+  overflow-x : hidden;
   padding: 4rem 4.8rem 6.4rem;
 `;
 const AppLayout = () => {
+  const [darkmode] = useContext(modeContext);
   return (
     <>
       <StyledAppLayout>
         <Header />
         <Sidebar />
-        <Main className="bg-slate-100">
+        <Main className={`${darkmode ? "bg-slate-900" : "bg-slate-200"}`}>
           <Container>
             <Outlet />
           </Container>

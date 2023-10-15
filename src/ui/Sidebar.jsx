@@ -2,7 +2,8 @@ import styled from "styled-components";
 import Logo from "./Logo.jsx";
 import MainNav from "./MainNav.jsx";
 import Uploader from "../data/Uploader.jsx";
-
+// import { useContext } from "react";
+// import {modeContext} from "../features/DarkMode/DarkModeProvider.jsx"
 const StyledSidebar = styled.aside`
   display: flex;
   flex-direction: column;
@@ -13,8 +14,11 @@ const StyledSidebar = styled.aside`
   grid-row: 1/-1;
 `;
 const Sidebar = () => {
+ 
+
+  
   return (
-    <StyledSidebar>
+    <StyledSidebar >
       <Logo />
       <MainNav />
       <Uploader />
