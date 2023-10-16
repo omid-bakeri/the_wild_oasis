@@ -37,6 +37,7 @@ const StyledNavLink = styled(NavLink)`
   &.active:link,
   &.active:visited {
     border-radius: var(--border-radius-sm);
+    background-color: "";
   }
 
   & svg {
@@ -61,56 +62,31 @@ const MainNav = () => {
       <nav>
         <NavList>
           <li>
-            <StyledNavLink
-              className={` ${
-                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
-              } `}
-              to="/dashboard"
-            >
+            <StyledNavLink className={``} to="/dashboard">
               <HiOutlineHome />
               <span>Home</span>
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink
-              to="/bookings"
-              className={` ${
-                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
-              }`}
-            >
+            <StyledNavLink to="/bookings">
               <HiOutlineCalendarDays />
               <span>Bookings</span>
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink
-              to="/Cabins"
-              className={` ${
-                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
-              }`}
-            >
+            <StyledNavLink to="/Cabins">
               <HiOutlineHomeModern />
               <span>Cabins</span>
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink
-              to="/Users"
-              className={` ${
-                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
-              }`}
-            >
+            <StyledNavLink to="/Users">
               <HiOutlineUsers />
               <span>Users</span>
             </StyledNavLink>
           </li>
           <li>
-            <StyledNavLink
-              to="/Settings"
-              className={` ${
-                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
-              }`}
-            >
+            <StyledNavLink to="/Settings">
               <HiOutlineCog8Tooth />
               <span>Settings</span>
             </StyledNavLink>

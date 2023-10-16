@@ -1,9 +1,7 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-
-const StyledLogo = styled.div`
-  text-align: center;
-`;
+import { modeContext } from "../features/DarkMode/DarkModeProvider";
 
 const Img = styled.img`
   height: 9.1rem;
@@ -11,12 +9,18 @@ const Img = styled.img`
 `;
 
 function Logo() {
+  const [darkmode] = useContext(modeContext);
   return (
-    <StyledLogo>
-      <Link to="/">
-        <Img src="../../public/images/logo-light.png" alt="Logo" />
-      </Link>
-    </StyledLogo>
+    <Link className="mx-auto" to="/">
+      <Img
+        src={`${
+          darkmode
+            ? "../../public/images/logo-dark.png"
+            : "../../public/images/logo-light.png"
+        }`}
+        alt="Logo"
+      />
+    </Link>
   );
 }
 
