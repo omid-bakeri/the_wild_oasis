@@ -1,10 +1,12 @@
 import styled from "styled-components";
-import {NavLink} from "react-router-dom";
-import {HiOutlineHome} from "react-icons/hi2";
-import {HiOutlineCalendarDays} from "react-icons/hi2";
-import {HiOutlineHomeModern} from "react-icons/hi2";
-import {HiOutlineUsers} from "react-icons/hi2";
-import {HiOutlineCog8Tooth} from "react-icons/hi2";
+import { NavLink } from "react-router-dom";
+import { HiOutlineHome } from "react-icons/hi2";
+import { HiOutlineCalendarDays } from "react-icons/hi2";
+import { HiOutlineHomeModern } from "react-icons/hi2";
+import { HiOutlineUsers } from "react-icons/hi2";
+import { HiOutlineCog8Tooth } from "react-icons/hi2";
+import { useContext } from "react";
+import { modeContext } from "../features/DarkMode/DarkModeProvider";
 // import { useContext } from "react";
 // import {modeContext} from "../features/DarkMode"
 
@@ -34,8 +36,6 @@ const StyledNavLink = styled(NavLink)`
   &:active,
   &.active:link,
   &.active:visited {
-    color: var(--color-grey-800);
-    background-color: var(--color-grey-100);
     border-radius: var(--border-radius-sm);
   }
 
@@ -53,56 +53,72 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-brand-600);
   }
 `;
- const MainNav = () => {
-    // const [darkmode, setDarkMode] = useContext(modeContext);
-    return (
-        <>
-           <nav>
-               <NavList>
-                   <li>
-                       <StyledNavLink to="/dashboard">
-                           <HiOutlineHome/>
-                       <span>
-                           Home
-                       </span>
-                       </StyledNavLink>
-                   </li>
-                   <li>
-                       <StyledNavLink to="/bookings">
-                           <HiOutlineCalendarDays/>
-                           <span>
-                               Bookings
-                           </span>
-                       </StyledNavLink>
-                   </li>
-                   <li>
-                       <StyledNavLink to="/Cabins">
-                           <HiOutlineHomeModern/>
-                           <span>
-                               Cabins
-                           </span>
-                       </StyledNavLink>
-                   </li>
-                   <li>
-                       <StyledNavLink to="/Users">
-                           <HiOutlineUsers/>
-                           <span>
-                               Users
-                           </span>
-                       </StyledNavLink>
-                   </li>
-                   <li>
-                       <StyledNavLink to="/Settings">
-                           <HiOutlineCog8Tooth/>
-                           <span>
-                               Settings
-                           </span>
-                       </StyledNavLink>
-                   </li>
-               </NavList>
-           </nav>
-        </>
-    )
-}
+const MainNav = () => {
+  const [darkmode] = useContext(modeContext);
+  darkmode;
+  return (
+    <>
+      <nav>
+        <NavList>
+          <li>
+            <StyledNavLink
+              className={` ${
+                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
+              } `}
+              to="/dashboard"
+            >
+              <HiOutlineHome />
+              <span>Home</span>
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink
+              to="/bookings"
+              className={` ${
+                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
+              }`}
+            >
+              <HiOutlineCalendarDays />
+              <span>Bookings</span>
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink
+              to="/Cabins"
+              className={` ${
+                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
+              }`}
+            >
+              <HiOutlineHomeModern />
+              <span>Cabins</span>
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink
+              to="/Users"
+              className={` ${
+                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
+              }`}
+            >
+              <HiOutlineUsers />
+              <span>Users</span>
+            </StyledNavLink>
+          </li>
+          <li>
+            <StyledNavLink
+              to="/Settings"
+              className={` ${
+                darkmode ? "focus:bg-slate-900" : "focus:bg-slate-200"
+              }`}
+            >
+              <HiOutlineCog8Tooth />
+              <span>Settings</span>
+            </StyledNavLink>
+          </li>
+        </NavList>
+      </nav>
+    </>
+  );
+};
 
 export default MainNav;
